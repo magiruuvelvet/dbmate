@@ -394,7 +394,7 @@ func (db *DB) Migrate() error {
 			}
 
 			// record migration
-			return drv.InsertMigration(tx, migration.Version)
+			return drv.InsertMigration(tx, migration.Version, migration.FileName)
 		}
 
 		if parsed.UpOptions.Transaction() {

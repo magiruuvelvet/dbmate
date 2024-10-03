@@ -329,13 +329,13 @@ func (drv *Driver) SelectMigrations(db *sql.DB, limit int) (map[string]bool, err
 }
 
 // InsertMigration adds a new migration record
-func (drv *Driver) InsertMigration(db dbutil.Transaction, version string) error {
+func (drv *Driver) InsertMigration(db dbutil.Transaction, version string, filename string) error {
 	migrationsTable, err := drv.quotedMigrationsTableName(db)
 	if err != nil {
 		return err
 	}
 
-	_, err = db.Exec("insert into "+migrationsTable+" (version) values ($1)", version)
+	_, err = db.Exec("insert into "+migrationsTable+" (version, comment) values ($1, $2)", version, filename)
 
 	return err
 }
